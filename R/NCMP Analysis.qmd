@@ -777,7 +777,7 @@ Where possible, 95% confidence intervals have been included. All summary statist
 Confidence intervals are displayed as one or both of:
 
 -   error bars on a chart, showing the upper and lower limits of the range
--   a range in the tooltip of a chart (e.g. 45.1% (43.2 - 46.3%) means the calculated value is 45.1%, with an upper confidence interval of 43.2% and a lower interval of 46.3%.)
+-   a range in the tooltip of a chart (e.g. 45.1% (43.2 - 46.3%) means the calculated value is 45.1%, with a lower confidence interval of 43.2% and an upper interval of 46.3%.)
 
 In the written commentary in this report, comparisons between groups and over time have been statistically tested to determine whether differences are likely to be genuine (i.e. statistically significant) or the result of random natural variation. Only statistically significant differences have been described with terms such as “higher”, “lower”, “increase” or “decrease”. Where non-significant differences are described they are clearly marked.
 
@@ -2986,7 +2986,7 @@ ineq_heatmap_interactive_mean(df = ncmp_data_period_8,
 
 **Figure 10g. Inequality matrix of deprivation and ethnicity, for percentage of Year 6 children who are obese (`{r} periods_short[8]` period)**
 
-Children of Asian, Black, White and Mixed ethnicities in IDACI quintile 1, as well as Black children in quintile 2, experience prevalence of obesity than the Birmingham average. Children of Asian, White and Other ethnicities in quintiles 3-5 have lower levels of obesity. Prevalence is highest in Black children in IDACI quintile 2.
+Children of Asian, Black, White and Mixed ethnicities in IDACI quintile 1, as well as Black children in quintile 2, experience higher prevalence of obesity than the Birmingham average. Children of Asian, White and Other ethnicities in quintiles 3-5 have lower levels of obesity. Prevalence is highest in Black children in IDACI quintile 2.
 
 ```{r ineq_mat_y6_obese}
 #| warning: false
