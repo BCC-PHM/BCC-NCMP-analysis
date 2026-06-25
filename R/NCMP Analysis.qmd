@@ -1055,7 +1055,7 @@ Deprivation is measured here using the Income Deprivation Affecting Children Ind
 ::: callout-warning
 ## Important Note
 
-It is important to note that the majority (around 70%) of children measured during the `{r} periods_short[8]` period are classed as living in IDACI quintile 1. Around 15% of children are in quintile 2, with the remaining 15% of children split evenly between quintiles 3, 4 and 5. 
+It is important to note that the majority (around 70%) of children measured during the `{r} periods_short[8]` period are classed as living in IDACI quintile 1. Around 15% of children are in quintile 2, with the remaining 15% of children split evenly between quintiles 3, 4 and 5.
 
 As a result, the sample sizes for quintiles 3, 4 and 5 are relatively small, meaning confidence intervals are generally large and statistical significance is harder to achieve. This should be taken into account when e.g. considering changes over time or comparing groups.
 :::
@@ -1277,16 +1277,27 @@ girafe(ggobj = graph)
 <!-- ### Trends by IDACI Quintile -->
 
 <!-- ```{r deprivation_trend_setup} -->
+
 <!-- trends_by_idaci_quintile_by_school_year_3yrs <- ncmp_data_3_years_combined |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "1" ~ "1", -->
+
 <!--                                                  IDACI_2025_Quintile == "2" ~ "2", -->
+
 <!--                                                  IDACI_2025_Quintile == "3" ~ "3-5", -->
+
 <!--                                                  IDACI_2025_Quintile == "4" ~ "3-5", -->
+
 <!--                                                  IDACI_2025_Quintile == "5" ~ "3-5")) |>  -->
+
 <!--   ncmp_summarise(.by_count = c(Year, School_Year, IDACI_2025_Quintile, BMI_Category), -->
+
 <!--                .by_denom = c(Year, School_Year, IDACI_2025_Quintile), -->
+
 <!--                .include_oo = T, -->
+
 <!--                .round_5 = T) -->
+
 <!-- ``` -->
 
 <!-- Figure 6(a-h) shows the percentage of children in each IDACI quintile who are classed as underweight, overweight or obese for 3-year rolling periods over time. Use the tabs to move between the figures. -->
@@ -1294,13 +1305,17 @@ girafe(ggobj = graph)
 <!-- Note that IDACI quintiles 3-5 have been combined into a single category to improve data robustness. -->
 
 <!-- ::: {.callout-note .column-margin} -->
+
 <!-- Note that these figures allow you to select which traces are visible, for ease of comparison. To hide a trace, click on the corresponding symbol in the legend. For example, to hide values for children in IDACI quintile 2, click on the orange symbol labelled 'Unknown'. To view a single trace and hide all others, double click on its symbol in the legend. -->
+
 <!-- ::: -->
 
 <!-- ::::: panel-tabset -->
+
 <!-- ## Reception -->
 
 <!-- ::: panel-tabset -->
+
 <!-- ## Underweight -->
 
 <!-- **Figure 6a. Percentage of Reception children who are underweight by IDACI quintile, over time** -->
@@ -1308,47 +1323,87 @@ girafe(ggobj = graph)
 <!-- For the past ten years, prevalence of underweight has been higher in children in IDACI quintile 1 than in quintiles 3-5. There has been a significant increase in prevalence of underweight in children in IDACI quintile 1 in this period. -->
 
 <!-- ```{r deprivation_trend_r_underweight} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Underweight", -->
+
 <!--          School_Year == "Reception") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
 
 <!-- ## Overweight -->
@@ -1358,47 +1413,87 @@ girafe(ggobj = graph)
 <!-- For the past ten years, prevalence of overweight has been statistically similar across all quintiles. During this period there has been a significant decrease in prevalence of overweight in children in IDACI quintiles 1 and 2. Prevalence in children in quintiles 3-5 has decreased but this change is not statistically significant. -->
 
 <!-- ```{r deprivation_trend_r_overweight} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Overweight", -->
+
 <!--          School_Year == "Reception") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
 
 <!-- ## Obese -->
@@ -1408,47 +1503,87 @@ girafe(ggobj = graph)
 <!-- For the past ten years, prevalence of obesity has consistently been higher in children in IDACI quintiles 1 and 2 than in children in quintiles 3-5. In general, children in quintile 1 have higher prevalence than children in quintile 2, but this difference is not always significant. -->
 
 <!-- ```{r deprivation_trend_r_obese} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Obese", -->
+
 <!--          School_Year == "Reception") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
 
 <!-- ## Overweight/Obese -->
@@ -1458,53 +1593,95 @@ girafe(ggobj = graph)
 <!-- For the past ten years, prevalence of overweight and obesity has consistently been higher in children in IDACI quintiles 1 and 2 than in children in quintiles 3-5. In general, children in quintile 1 have slightly higher prevalence than children in quintile 2, but this difference is never significant. -->
 
 <!-- ```{r deprivation_trend_r_overweight_obese} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Overweight/Obese", -->
+
 <!--          School_Year == "Reception") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
+
 <!-- ::: -->
 
 <!-- ## Year 6 -->
 
 <!-- ::: panel-tabset -->
+
 <!-- ## Underweight -->
 
 <!-- **Figure 6e. Percentage of Year 6 children who are underweight by IDACI quintile, over time** -->
@@ -1512,51 +1689,95 @@ girafe(ggobj = graph)
 <!-- For most of the past ten years, prevalence of underweight has been higher in children in IDACI quintile 1 than in quintiles 3-5, but this difference has not been statistically significant since the 2016-19 period. There has been a significant increase in prevalence of underweight in children in IDACI quintile 1 between 2014-17 and 2022-25. -->
 
 <!-- ```{r deprivation_trend_y6_underweight} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Underweight", -->
+
 <!--          School_Year == "Year 6") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      #limits = c(8,22), -->
+
 <!--                      #breaks = c(8, 10, 12, 14, 16, 18, 20, 22), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   # scale_shape_manual(values = c(15, 16, 17, 18, 8, 4), -->
+
 <!--   #                    name = "Ethnicity") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
 
 <!-- ## Overweight -->
@@ -1566,51 +1787,95 @@ girafe(ggobj = graph)
 <!-- For the past ten years, prevalence of overweight has been statistically similar across all quintiles. During this period there has been a significant decrease in prevalence of overweight in children in IDACI quintiles 1. -->
 
 <!-- ```{r deprivation_trend_y6_overweight} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Overweight", -->
+
 <!--          School_Year == "Year 6") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      #limits = c(8,22), -->
+
 <!--                      #breaks = c(8, 10, 12, 14, 16, 18, 20, 22), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   # scale_shape_manual(values = c(15, 16, 17, 18, 8, 4), -->
+
 <!--   #                    name = "Ethnicity") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
 
 <!-- ## Obese -->
@@ -1620,51 +1885,95 @@ girafe(ggobj = graph)
 <!-- For the past ten years, prevalence of obesity has been highest in children from the most deprived areas. Children in IDACI quintile 2 also consistently have higher prevalence than children in quintiles 3-5. In this period, prevalence of obesity has increased in children in from the most deprived areas only. -->
 
 <!-- ```{r deprivation_trend_y6_obese} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Obese", -->
+
 <!--          School_Year == "Year 6") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      #limits = c(8,22), -->
+
 <!--                      #breaks = c(8, 10, 12, 14, 16, 18, 20, 22), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   # scale_shape_manual(values = c(15, 16, 17, 18, 8, 4), -->
+
 <!--   #                    name = "Ethnicity") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
 
 <!-- ## Overweight/Obese -->
@@ -1674,53 +1983,99 @@ girafe(ggobj = graph)
 <!-- For the past ten years, prevalence of overweight and obesity has been highest in children from the most deprived areas. Children in IDACI quintile 2 also consistently have higher prevalence than children in quintiles 3-5. No group has seen a significant increase or decrease in prevalence in this period. -->
 
 <!-- ```{r deprivation_trend_y6_obese_overweight} -->
+
 <!-- graph <- trends_by_idaci_quintile_by_school_year_3yrs |>  -->
+
 <!--   filter(BMI_Category == "Overweight/Obese", -->
+
 <!--          School_Year == "Year 6") |>  -->
+
 <!--   mutate(pct = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                          .default = pct), -->
+
 <!--          lower_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = lower_ci), -->
+
 <!--          upper_ci = case_when(count <= 7 ~ NA_real_, -->
+
 <!--                               .default = upper_ci)) |>  -->
+
 <!--   mutate(tooltip = paste0(Year, "\n", -->
+
 <!--                           "IDACI Quintile ", IDACI_2025_Quintile, "\n", -->
+
 <!--                           BMI_Category, "\n", -->
+
 <!--                           round(pct, 1), "% (", round(lower_ci, 1), " - ", round(upper_ci, 1), "%)")) |>  -->
+
 <!--   mutate(IDACI_2025_Quintile = case_when(IDACI_2025_Quintile == "5" ~ "5 (least deprived)", -->
+
 <!--                                          IDACI_2025_Quintile == "1" ~ "1 (most deprived)", -->
+
 <!--                                          .default = IDACI_2025_Quintile)) |> -->
+
 <!--   ggplot(aes(x = Year, -->
+
 <!--              y = pct, -->
+
 <!--              col = IDACI_2025_Quintile)) + -->
+
 <!--   geom_line(aes(group = IDACI_2025_Quintile, -->
+
 <!--                 text = tooltip), -->
+
 <!--             linewidth = 1) + -->
+
 <!--   geom_point(aes(text = tooltip), -->
+
 <!--              #col = "white" -->
+
 <!--              size = 2) + -->
+
 <!--   geom_errorbar(aes(ymin = lower_ci, -->
+
 <!--                     ymax = upper_ci), -->
+
 <!--                 width = 0.2) + -->
+
 <!--   theme_classic() + -->
+
 <!--   scale_x_discrete(expand = c(0,0)) + -->
+
 <!--   scale_y_continuous(expand = c(0,0), -->
+
 <!--                      #limits = c(8,22), -->
+
 <!--                      #breaks = c(8, 10, 12, 14, 16, 18, 20, 22), -->
+
 <!--                      labels = scales::label_percent(scale = 1)) + -->
+
 <!--   scale_colour_manual(values = c(bcc_colours), -->
+
 <!--                       name = "IDACI 2025 Quintile") + -->
+
 <!--   # scale_shape_manual(values = c(15, 16, 17, 18, 8, 4), -->
+
 <!--   #                    name = "Ethnicity") + -->
+
 <!--   ylab("Percentage of children") + -->
+
 <!--   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -->
 
 <!-- ggplotly(graph, tooltip = "text", -->
+
 <!--          height = 600) |>  -->
+
 <!--   config(modeBarButtonsToRemove = c('zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'lasso2d', 'autoScale', 'resetScale'), -->
+
 <!--          displaylogo = F) -->
+
 <!-- ``` -->
+
 <!-- ::: -->
+
 <!-- ::::: -->
 
 ### Trends by IDACI Quintile
@@ -1758,7 +2113,6 @@ deprivation_trend_inequality_graph(trends_by_idaci_quintile_by_school_year_3yrs,
 **Figure 6b. Percentage of Reception children who are overweight by IDACI quintile, over time**
 
 For the past ten years, prevalence of overweight has generally been similar in IDACI quintiles 1 and 5. During this period there has been a significant decrease in prevalence of overweight in children in IDACI quintile 1. There has been no significant change in absolute inequality (i.e. the deprivation gap).
-
 
 ```{r deprivation_gap_r_overweight}
 deprivation_trend_inequality_graph(trends_by_idaci_quintile_by_school_year_3yrs,
