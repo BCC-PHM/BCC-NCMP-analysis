@@ -8,7 +8,7 @@ format:
       body-width: 900px
     embed-resources: true
 toc: true
-editor: visual
+editor: source
 execute: 
   echo: false
   warning: false
@@ -527,8 +527,15 @@ deprivation_trend_inequality_graph <- function(df, .BMI_Category, .School_Year){
 
 ```{r data_import}
 #| output: false
+
+# set shape file paths and SQL server from global .Renviron
+shape_file_path <- Sys.getenv("shape_file_path")
+data_file_path <- Sys.getenv("data_file_path")
+
+sql_server <- paste0(Sys.getenv("sql_server"), "\\", Sys.getenv("sql_server"))
+
 # create connection to SQL server
-conpool <- pool::dbPool(drv = odbc::odbc(), Driver="SQL Server", Server="SVWVSQ016\\SVWVSQ016", Database="PH_Evelyn", Trusted_Connection="True")           # ie setting up an ODBC connection to SQL Server.
+conpool <- pool::dbPool(drv = odbc::odbc(), Driver="SQL Server", Server=sql_server, Database="PH_Evelyn", Trusted_Connection="True")           # ie setting up an ODBC connection to SQL Server.
 
 # NCMP data from SQL
 # Create a string variable containing SQL string
@@ -723,7 +730,7 @@ periods <- unique(ncmp_data_3_years_combined$Year)
 periods_short <- sub("/([A-Za-z0-9]+( [A-Za-z0-9]+)+)/", "-", unique(ncmp_data_3_years_combined$Year))
 
 # load participation info list
-load("participation_info.rda")
+load("../data/participation_info.rda")
 
 # extract values from list
 fingertips_reception_participants <- participation_info$fingertips_reception_participants
@@ -769,7 +776,7 @@ obese_overweight_all_birmingham_y6_upper_ci <- obese_overweight_all_birmingham_b
 ```{r fingertips_data_import}
 #| output: false
 
-load("fingertips_data_3_years_combined.rda")
+load("../data/fingertips_data_3_years_combined.rda")
 ```
 
 This report was produced by Birmingham Public Health (Knowledge Team). For support or feedback please contact publichealthintelligence\@birmingham.gov.uk
@@ -2993,26 +3000,26 @@ This section looks at how prevalence of overweight and obesity is distributed ge
 # Data Import -------------------------------------------------------------
 
 # MSOAs
-birmingham_msoa <- read_sf("C:/Users/bccaengs/OneDrive - Birmingham City Council/Documents/Work/Useful datasets/Shape files/birmingham_msoa_2021.geojson")
-msoa_name_lookup <- read.csv("C:/Users/bccaengs/OneDrive - Birmingham City Council/Documents/Work/Useful datasets/msoa_name_lookup.csv") |> 
+birmingham_msoa <- read_sf(paste0(shape_file_path,"birmingham_msoa_2021.geojson"))
+msoa_name_lookup <- read.csv(paste0(data_file_path,"msoa_name_lookup.csv")) |> 
   select(msoa21cd, msoa21nm, msoa21hclnm)
  
 # Wards
-birmingham_wards <- read_sf("C:/Users/bccaengs/OneDrive - Birmingham City Council/Documents/Work/Useful datasets/Shape files/boundaries-wards-2022-birmingham.geojson")
+birmingham_wards <- read_sf(paste0(shape_file_path,"boundaries-wards-2022-birmingham.geojson"))
 
 # Constituencies
-birmingham_con <- read_sf("C:/Users/bccaengs/OneDrive - Birmingham City Council/Documents/Work/Useful datasets/Shape files/boundaries-constituencies24-bsol.geojson") |> 
+birmingham_con <- read_sf(paste0(shape_file_path,"boundaries-constituencies24-bsol.geojson")) |> 
   filter(local_authority_name == "Birmingham") |> 
   rename(PCON24CD = pcon24cd,
          PCON24NM = pcon24nm) |> 
   mutate(PCON24NM = str_replace(PCON24NM, "Birmingham ", ""))
 
-birmingham_locality <- read_sf("C:/Users/bccaengs/OneDrive - Birmingham City Council/Documents/Work/Useful datasets/Shape files/boundaries-locality-bsol.geojson") |> 
+birmingham_locality <- read_sf(paste0(shape_file_path,"boundaries-locality-bsol.geojson")) |> 
   filter(locality != "Solihull")
 
 # import schools data
 
-bham_schools <- read.csv("C:/Users/bccaengs/OneDrive - Birmingham City Council/Documents/Work/Useful datasets/all_uk_schools_20250312.csv") |> 
+bham_schools <- read.csv(paste0(data_file_path,"all_uk_schools_20250312.csv")) |> 
   filter(`LA..name.` == "Birmingham",
          `EstablishmentStatus..name.` == "Open") |> 
   select(URN, EstablishmentName, `TypeOfEstablishment..name.`, `EstablishmentTypeGroup..name.`,
